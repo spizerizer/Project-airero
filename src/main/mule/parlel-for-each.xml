@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e01ec334-4b2b-4006-b187-74424513cbd7" >
+		<http:listener-connection host="0.0.0.0" port="8082" />
+	</http:listener-config>
+	<flow name="parlel-for-eachFlow" doc:id="0b01f800-eb94-4530-835b-2b94a2c8498c" >
+		<http:listener doc:name="Listener" doc:id="a7cb9861-e2a3-4fd2-b64a-eff4021f5a4a" config-ref="HTTP_Listener_config" path="/par"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e1562cfa-f47c-43d7-a64a-1564288a5f93" message="#[payload]"/>
+		<parallel-foreach doc:name="Parallel For Each" doc:id="9c79e3d6-3ac7-4926-8b5a-a1c5be2f3cc8" collection="#[payload]">
+			<logger level="INFO" doc:name="Logger" doc:id="6463642a-a29b-41d6-a9d4-46b469f6e9c6" message="#### "/>
+			<logger level="INFO" doc:name="Logger" doc:id="eb38e42a-2882-44ec-bb3a-051118287406" message="####"/>
+		</parallel-foreach>
+		<logger level="INFO" doc:name="Logger" doc:id="e5c49781-eac3-4497-a631-404625c0de9f" message='########## "After payload"'/>
+	</flow>
+</mule>
